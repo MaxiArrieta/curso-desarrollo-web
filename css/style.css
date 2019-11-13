@@ -1,0 +1,9 @@
+.left{
+    display: inline-block;
+    width: 75%;
+}
+.right{
+    display: inline-block;
+    width: 15%;
+    vertical-align: text-bottom;
+}
