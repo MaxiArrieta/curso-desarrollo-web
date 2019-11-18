@@ -1,0 +1,22 @@
+.txt{
+    height: auto;
+    width: 65%;    
+    display:inline-block;
+}
+.tabla{
+    height: auto;
+    width: 30%;
+
+}
+.tabla1 {
+    float: left;
+    width: 50%;
+}
+.tabla2 {
+    float: right;
+    width: 50%;
+}
+.mail{
+	margin-right: 15px;
+	margin-top: 15px;
+}
