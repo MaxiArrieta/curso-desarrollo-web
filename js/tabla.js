@@ -1,6 +1,6 @@
 function renderRows(data) {
     var html = getRowsHtml(data);
-    document.getElementById("senate-data").innerHTML = html;
+    document.getElementById("table-data").innerHTML = html;
     }
     renderRows(data);
     function getRowsHtml(data){

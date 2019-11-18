@@ -54,36 +54,82 @@ function porcentaje(cantVotos, total){
 var tablaBottom = "";
 var tablaTop = "";
 
-//ordeno por el % de missed_votes_pct
-members.sort(function (a, b) {
-    if(a.missed_votes_pct > b.missed_votes_pct){
-        return 1;
+/* La variable isLotalty es una variable booleana esta definida en el html
+ * Si es true ordena por los Least Loyal y con el for carga la tabla
+ * en las variables tablaBottom y tablaTop.
+ * Si la variable isLoyalty es false entonces ordenas por los missed_votes_pcy
+ * y carga con el for las varbles tablaBottom y tablaTop.
+ */
+if(isLoyalty){
+    members.sort(function (a, b) {
+        if (a.votes_with_party_pct > b.votes_with_party_pct) {
+            return 1;
+        }
+        if (a.votes_with_party_pct < b.votes_with_party_pct) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+    for(var i = 0; i < members.length; i++){
+        if(i < members.length * 0.1){
+            tablaBottom += "<tr><td> " + members[i].first_name + " "
+                + ((members[i].middle_name) != null ? members[i].middle_name : "") + " "
+                + ((members[i].last_name) != null ? members[i].last_name : "") + " </td>" +
+                "<td align ='center'>" + Math.round((members[i].total_votes * members[i].votes_with_party_pct) / 100) + "</td>" + 
+                "<td align ='center'>" + members[i].votes_with_party_pct + "%" + "</td></tr>";
+        }
     }
-    if (a.missed_votes_pct < b.missed_votes_pct){
-        return -1;
-    }else {
-        return 0;
+    members.reverse(); /* este reverse lo que hace es invertir de la forma que fue ordenada
+                        * para que las tablas se visualicen como pide el ejercicio
+                        * En el if saco el 10% de members y como di vuelta la tabla 
+                        * los que aparecen en la primeras posiciones son los mostLoyal
+                        */
+        for(var i = 0; i < members.length; i++){
+            if(i < members.length * 0.1){
+            tablaTop += "<tr><td> " + members[i].first_name + " "
+                + ((members[i].middle_name) != null ? members[i].middle_name : "") + " "
+                + ((members[i].last_name) != null ? members[i].last_name : "") + " </td>" +
+                "<td align ='center'>" + Math.round((members[i].total_votes * members[i].votes_with_party_pct) / 100) + "</td>" + 
+                "<td align ='center'>" + members[i].votes_with_party_pct + "%" + "</td></tr>";
+        }
     }
-});
+}else {
+    members.sort(function (a, b) {
+        if (a.missed_votes_pct > b.missed_votes_pct) {
+            return 1;
+        }
+        if (a.missed_votes_pct < b.missed_votes_pct) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+    for(var i = 0; i < members.length; i++){
+        if(i < members.length * 0.1){
+            tablaBottom += "<tr><td> " + members[i].first_name + " "
+                + ((members[i].middle_name) != null ? members[i].middle_name : "") + " "
+                + ((members[i].last_name) != null ? members[i].last_name : "") + " </td>" +
+                "<td align ='center'>" + members[i].missed_votes + "</td>" + 
+                "<td align ='center'>" + members[i].missed_votes_pct + "%" + "</td></tr>";
+        }
+    }
+    members.reverse();
+    for(var i = 0; i < members.length; i++){
+        if(i < members.length * 0.1){
+            tablaTop += "<tr><td> " + members[i].first_name + " "
+                + ((members[i].middle_name) != null ? members[i].middle_name : "") + " "
+                + ((members[i].last_name) != null ? members[i].last_name : "") + " </td>" +
+                "<td align ='center'>" + members[i].missed_votes + "</td>" + 
+                "<td align ='center'>" + members[i].missed_votes_pct + "%" + "</td></tr>";
+        }
+    }
+}
 
 /* Recorro el array y agrego los datos requeridos para la tabla:
  * el nombre, missed-votes y el % de missed-votes
  * multiplico el members.lenght * 0.1 para sacar el 10%
  */
-for(var i = 0; i < members.length; i++){
-    if(members[i].missed_votes_pct < members.length * 0.1){
-        tablaBottom += "<tr><td> " + members[i].first_name + " </td>" +
-            "<td align ='center'>" + members[i].missed_votes + "</td>" + 
-            "<td align ='center'>" + members[i].missed_votes_pct + "%" + "</td></tr>";
-    }
-    if(members[i].missed_votes_pct > members.length * 0.1){
-        tablaTop += "<tr><td> " + members[i].first_name + " </td>" +
-            "<td align ='center'>" + members[i].missed_votes + "</td>" + 
-            "<td align ='center'>" + members[i].missed_votes_pct + "%" + "</td></tr>";
-    }
-}
+
 document.getElementById("missed-votes").innerHTML = tablaBottom;
 document.getElementById("top-votes").innerHTML = tablaTop;
-
-
-
