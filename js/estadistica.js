@@ -4,12 +4,12 @@ var votosRep = 0;
 var votosDem = 0;
 var votosInd = 0;
 var members = data.results[0].members;
+var republicanos = members.filter(republic => republic.party == "R");
+var democratas = members.filter(dem => dem.party == "D");
+var independientes = members.filter(ind => ind.party == "I");
 
 /////Recorro el array para sacar a todos los respublicanos, democratas y Independientes
 for(var i = 0; i <members.length; i++){
-    var republicanos = members.filter(republic => republic.party == "R");
-    var democratas = members.filter(dem => dem.party == "D");
-    var independientes = members.filter(ind => ind.party == "I");
     votosTotal += members[i].votes_with_party_pct
 
 ////sumo la cantidad de votos
